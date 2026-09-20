@@ -2,5 +2,9 @@
 compile = "codon build -release {path} -o a.out"
 execute = "./a.out -f {path}"
 bundle = "true"
-list_dependencies = "awk '/^from \\.\\.library\\./ {{ sub(/^from \\.\\.library\\./, \"\"); sub(/ import.*$/, \"\"); gsub(/\\./, \"/\"); print \"library/\" $0 \".codon\" }}' {path}"
+list_dependencies = '''awk '/^from \.\.\.?library\./ {{ sub(/^from \.\.\.?library\./, ""); sub(/ import.*$/, ""); gsub(/\./, "/"); print "library/" $0 ".py" }}' {path}'''
 verification_file_suffix = ".test.codon"
+
+[languages.py]
+bundle = "cat {path}"
+list_dependencies = '''awk '/^from \.\.\.?library\./ {{ sub(/^from \.\.\.?library\./, ""); sub(/ import.*$/, ""); gsub(/\./, "/"); print "library/" $0 ".py" }}' {path}'''

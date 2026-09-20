@@ -1,0 +1,11 @@
+# verification-helper: PROBLEM https://judge.yosupo.jp/problem/binomial_coefficient_prime_mod
+
+from ...library.modulo.binomial_class import CombinationClass
+
+TT,mod = list(map(int,input().split()))
+C = CombinationClass(min(10**7,mod)-1,mod)
+
+for _ in range(TT):
+    n,k = list(map(int,input().split()))
+    res = C.calc_comb(n,k)
+    print(res)

@@ -1,0 +1,13 @@
+# verification-helper: PROBLEM https://judge.yosupo.jp/problem/binomial_coefficient_prime_mod
+
+
+from ...library.modulo.binomial import init,calc_comb
+
+T,mod = list(map(int,input().split()))
+
+init(min(10**7,mod)-1,mod)
+
+for i in range(T):
+    n,k = list(map(int,input().split()))
+    res = calc_comb(n,k,mod)
+    print(res)

@@ -1,6 +1,6 @@
 # verification-helper: PROBLEM https://judge.yosupo.jp/problem/aplusb
 
-from ..library.math.plus import plus
+from ...library.math.plus import plus
 
 A,B = list(map(int,input().split()))
 print(plus(A,B))

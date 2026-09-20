@@ -1,0 +1,7 @@
+# verification-helper: PROBLEM https://onlinejudge.u-aizu.ac.jp/challenges/sources/PCK/Prelim/0019
+
+from ...library.math.factorial import make_factorial_table
+
+N : int = int(input())
+fact = make_factorial_table(N,8999999999999999983)
+print(fact[N])
