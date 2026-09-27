@@ -2,3 +2,4 @@
 .verify-helper/cache
 a.out
 __pycache__/
+.vscode/
