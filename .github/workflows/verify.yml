@@ -18,11 +18,16 @@ jobs:
     
     - name: Install Codon
       run: |
-        /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
+        /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)" || true
         echo "$HOME/.codon/bin" >> "$GITHUB_PATH"
+    
+    - name: Check Codon
+      run: |
+        which codon
+        codon --version
 
     - name: Install dependencies
-      run: pip3 install -U git+https://github.com/${{ github.repository }}.git@master
+      run: pip3 install -U git+https://github.com/${{ github.repository }}.git@main
 
       
     - name: Run tests
