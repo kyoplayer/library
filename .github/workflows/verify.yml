@@ -17,7 +17,9 @@ jobs:
       uses: actions/setup-python@v4
     
     - name: Install Codon
-      run: /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
+      run: |
+        /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
+        echo "$HOME/.codon/bin" >> "$GITHUB_PATH"
 
     - name: Install dependencies
       run: pip3 install -U git+https://github.com/${{ github.repository }}.git@master
