@@ -31,13 +31,8 @@ jobs:
                 pip install "setuptools<82"
                 pip install online-judge-verify-helper
             
-            - name: Check oj-verify version
-              run: |
-                oj-verify --version
-                pip show online-judge-verify-helper
-            
             - name: Generate documentation
-              run: oj-verify docs
+              run: oj-verify --config-file .verify-helper/docs-config.toml docs
             
             - name: Setup Pages
               uses: actions/configure-pages@v5
