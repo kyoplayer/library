@@ -27,7 +27,9 @@ jobs:
         codon --version
 
     - name: Install dependencies
-      run: pip3 install -U git+https://github.com/${{ github.repository }}.git@main
+      run: |
+        pip install "setuptools<82"
+        pip install online-judge-verify-helper
 
       
     - name: Run tests
