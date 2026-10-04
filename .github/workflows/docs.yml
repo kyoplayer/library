@@ -68,6 +68,11 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           oj-verify all
+      - name: Check files
+        run: |
+          pwd
+          ls -la
+          find . -name bundle.py
 
       - name: Generate documentation
         run: |
