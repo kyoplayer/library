@@ -59,7 +59,9 @@ jobs:
               f.write(s)
           PY
           
-
+      - name: Check markdown
+        run: |
+          grep -R '^documentation_of:' .verify-helper/markdown || true
 
       - name: Verify
         env:
