@@ -40,7 +40,6 @@ jobs:
     
       - name: Check oj-verify version
         run: |
-            oj-verify --version
             pip show online-judge-verify-helper
 
       - name: Verify
