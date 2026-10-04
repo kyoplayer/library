@@ -42,6 +42,15 @@ jobs:
         run: |
             pip show online-judge-verify-helper
 
+      - name: Debug Python language
+        run: |
+            python - <<'PY'
+            import onlinejudge_verify.languages.list as x
+            print(x.__file__)
+            print(x._dict)
+            print(x._get_dict())
+            PY
+
       - name: Verify
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
