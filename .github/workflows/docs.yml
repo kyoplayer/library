@@ -1,0 +1,72 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    permissions:
+        contents: read
+        pages: write
+        id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install Codon
+        run: |
+          /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)" || true
+          echo "$HOME/.codon/bin" >> "$GITHUB_PATH"
+
+      - name: Check Codon
+        run: |
+          which codon
+          codon --version
+
+      - name: Install oj-verify
+        run: |
+          pip install "setuptools<81"
+          pip install online-judge-verify-helper
+
+      - name: Verify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          oj-verify all
+
+      - name: Generate documentation
+        run: |
+          oj-verify docs
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: false
+
+      - name: Build Jekyll site
+        working-directory: .verify-helper/markdown
+        run: |
+          bundle install --path .vendor/bundle
+          bundle exec jekyll build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .verify-helper/markdown/_site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
