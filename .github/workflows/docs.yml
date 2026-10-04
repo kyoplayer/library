@@ -85,7 +85,7 @@ jobs:
           bundler-cache: false
 
       - name: Build Jekyll site
-        working-directory: .verify-helper/markdown
+        working-directory: .verify-helper/markdown 
         run: |
           bundle install --path .vendor/bundle
           bundle exec jekyll build
