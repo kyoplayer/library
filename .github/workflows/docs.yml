@@ -72,28 +72,6 @@ jobs:
           ls -la
           find . -name bundle.py
       
-      - name: Patch onlinejudge-verify
-        run: |
-          CONFIGURE=$(python3 -c 'import onlinejudge_verify.documentation.configure as x; print(x.__file__)')
-
-          python3 - "$CONFIGURE" <<'PY'
-          from pathlib import Path
-          import sys
-
-          path = Path(sys.argv[1])
-          text = path.read_text()
-
-          old = 'front_matter[FrontMatterItem.documentation_of.value] = str(documentation_of_relative_path)'
-          new = 'front_matter[FrontMatterItem.documentation_of.value] = "//" + str(documentation_of_relative_path)'
-
-          if old not in text:
-              raise SystemExit(f"target not found: {path}")
-
-          path.write_text(text.replace(old, new))
-          print(f"patched: {path}")
-          PY
-
-          grep -n -B2 -A2 'documentation_of.value.*documentation_of_relative_path' "$CONFIGURE"
       - name: Debug markdown files
         run: |
           echo "PWD=$(pwd)"
