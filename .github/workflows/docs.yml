@@ -67,7 +67,7 @@ jobs:
           YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          oj-verify all
+          oj-verify --config-file .verify-helper/docs-config.toml all
       - name: Check files
         run: |
           pwd
@@ -76,7 +76,7 @@ jobs:
 
       - name: Generate documentation
         run: |
-          oj-verify docs 
+          oj-verify --config-file .verify-helper/docs-config.toml docs 
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
