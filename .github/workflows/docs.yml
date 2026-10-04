@@ -59,10 +59,6 @@ jobs:
               f.write(s)
           PY
           
-      - name: Check markdown
-        run: |
-          grep -R '^documentation_of:' .verify-helper/markdown || true
-
       - name: Verify
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -96,6 +92,7 @@ jobs:
           path.write_text(text.replace(old, new))
           print(f"patched: {path}")
           PY
+          grep -n -B2 -A2 'documentation_of.value.*stat.path' "$CONFIGURE"
 
       - name: Generate documentation
         run: |
