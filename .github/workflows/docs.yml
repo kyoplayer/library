@@ -136,6 +136,12 @@ jobs:
         run: |
           bundle install --path .vendor/bundle
           bundle exec jekyll build
+      
+      - name: Check Jekyll output
+        working-directory: .verify-helper/markdown
+        run: |
+          echo "---- _site ----"
+          find _site -type f | sort
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
