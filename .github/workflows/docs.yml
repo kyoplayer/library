@@ -143,6 +143,18 @@ jobs:
           echo "---- _site ----"
           find _site -type f | sort
 
+      - name: Debug Jekyll config
+        working-directory: .verify-helper/markdown
+        run: |
+          cat _config.yml
+      
+      - name: Debug generated markdown
+        working-directory: .verify-helper/markdown
+        run: |
+          find . -name '*.md' -print
+          echo "---- factorial ----"
+          cat library/math/factorial.py.md
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
