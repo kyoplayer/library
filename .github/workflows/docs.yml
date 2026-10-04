@@ -71,7 +71,7 @@ jobs:
 
       - name: Generate documentation
         run: |
-          oj-verify docs
+          oj-verify docs 
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
