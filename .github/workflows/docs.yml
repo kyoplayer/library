@@ -83,8 +83,8 @@ jobs:
           path = Path(sys.argv[1])
           text = path.read_text()
 
-          old = 'front_matter[FrontMatterItem.documentation_of.value] = str(stat.path)'
-          new = 'front_matter[FrontMatterItem.documentation_of.value] = "//" + str(stat.path)'
+          old = 'front_matter[FrontMatterItem.documentation_of.value] = str(documentation_of_relative_path)'
+          new = 'front_matter[FrontMatterItem.documentation_of.value] = "//" + str(documentation_of_relative_path)'
 
           if old not in text:
               raise SystemExit(f"target not found: {path}")
@@ -92,7 +92,9 @@ jobs:
           path.write_text(text.replace(old, new))
           print(f"patched: {path}")
           PY
-          grep -n -B2 -A2 'documentation_of.value.*stat.path' "$CONFIGURE"
+
+          grep -n -B2 -A2 'documentation_of.value.*documentation_of_relative_path' "$CONFIGURE"
+          
 
       - name: Generate documentation
         run: |
