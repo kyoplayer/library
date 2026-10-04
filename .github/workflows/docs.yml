@@ -94,7 +94,22 @@ jobs:
           PY
 
           grep -n -B2 -A2 'documentation_of.value.*documentation_of_relative_path' "$CONFIGURE"
-          
+      - name: Debug markdown files
+        run: |
+          echo "PWD=$(pwd)"
+          echo "---- markdown files ----"
+          find . -name '*.md' -not -path './.git/*' -print
+          echo "---- documentation_of ----"
+          grep -R -n 'documentation_of:' . \
+            --include='*.md' \
+            --exclude-dir=.git
+      
+      - name: Debug environment
+        run: |
+          pwd
+          python3 -c "import pathlib; print(pathlib.Path.cwd())"
+          python3 -c "import onlinejudge_verify; print(onlinejudge_verify.__file__)"
+          python3 -c "import onlinejudge_verify.documentation.configure as x; print(x.__file__)"
 
       - name: Generate documentation
         run: |
