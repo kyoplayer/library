@@ -37,6 +37,11 @@ jobs:
         run: |
           pip install "setuptools<81"
           pip install online-judge-verify-helper
+    
+      - name: Check oj-verify version
+        run: |
+            oj-verify --version
+            pip show online-judge-verify-helper
 
       - name: Verify
         env:
