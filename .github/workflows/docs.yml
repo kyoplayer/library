@@ -123,7 +123,22 @@ jobs:
 
       - name: Generate documentation
         run: |
-          oj-verify --config-file .verify-helper/docs-config.toml docs 
+          oj-verify --config-file .verify-helper/docs-config.toml docs
+
+          python3 - <<'PY'
+          from pathlib import Path
+
+          config = Path(".verify-helper/markdown/_config.yml")
+          text = config.read_text()
+
+          text = (
+              'url: "https://kyoplayer.github.io"\n'
+              'baseurl: "/library"\n'
+              + text
+          )
+
+          config.write_text(text)
+          PY
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
