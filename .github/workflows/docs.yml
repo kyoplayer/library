@@ -130,6 +130,17 @@ jobs:
         with:
           ruby-version: "3.3"
           bundler-cache: false
+      
+      - name: Debug generated docs
+        run: |
+          echo "=== generated markdown ==="
+          find .verify-helper/markdown -maxdepth 3 -type f | sort
+
+          echo "=== links to binomial_class ==="
+          grep -R "binomial_class" .verify-helper/markdown || true
+
+          echo "=== css references ==="
+          grep -R "stylesheet\|css" .verify-helper/markdown --include="*.html" --include="*.md" || true
 
       - name: Build Jekyll site
         working-directory: .verify-helper/markdown 
