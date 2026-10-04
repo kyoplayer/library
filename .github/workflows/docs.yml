@@ -42,13 +42,47 @@ jobs:
         run: |
             pip show online-judge-verify-helper
 
-      - name: Debug Python language
+      - name: Debug language registration
         run: |
             python - <<'PY'
             import onlinejudge_verify.languages.list as x
-            print(x.__file__)
-            print(x._dict)
-            print(x._get_dict())
+            from onlinejudge_verify.config import get_config
+
+            print("config:")
+            print(get_config())
+
+            d = {}
+
+            print("before:", d)
+
+            # list.py と同じ初期登録
+            from onlinejudge_verify.languages.cpp import CPlusPlusLanguage
+            from onlinejudge_verify.languages.csharp import CSharpScriptLanguage
+            from onlinejudge_verify.languages.nim import NimLanguage
+            from onlinejudge_verify.languages.haskell import HaskellLanguage
+            from onlinejudge_verify.languages.ruby import RubyLanguage
+            from onlinejudge_verify.languages.go import GoLanguage
+            from onlinejudge_verify.languages.java import JavaLanguage
+            from onlinejudge_verify.languages.rust import RustLanguage
+
+            d['.cpp'] = CPlusPlusLanguage()
+            d['.hpp'] = d['.cpp']
+            d['.cc'] = d['.cpp']
+            d['.h'] = d['.cpp']
+            d['.csx'] = CSharpScriptLanguage()
+            d['.nim'] = NimLanguage()
+            d['.hs'] = HaskellLanguage()
+            d['.ruby'] = RubyLanguage()
+            d['.go'] = GoLanguage()
+            d['.java'] = JavaLanguage()
+            d['.rs'] = RustLanguage()
+
+            print("after builtin:", d.keys())
+
+            for ext, config in get_config().get('languages', {}).items():
+                print("processing:", repr(ext))
+                print("  exists:", '.' + ext in d)
+                print("  keys:", d.keys())
             PY
 
       - name: Verify
