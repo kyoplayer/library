@@ -104,6 +104,38 @@ jobs:
             --include='*.md' \
             --exclude-dir=.git
       
+      - name: Debug markdown paths
+        run: |
+          python3 - <<'PY'
+          import pathlib
+          from onlinejudge_verify.documentation import configure, front_matter
+
+          basedir = pathlib.Path.cwd()
+          print("basedir =", basedir)
+
+          print("=== find_markdown_paths ===")
+          paths = configure.find_markdown_paths(basedir=basedir)
+
+          for p in paths:
+              print("MARKDOWN:", p)
+              with open(p, "rb") as f:
+                  fm, _ = front_matter.split_front_matter(f.read())
+              if "documentation_of" in fm:
+                  print("  documentation_of =", repr(fm["documentation_of"]))
+          PY
+
+      - name: Debug onlinejudge-verify
+        run: |
+          pip show online-judge-verify-helper
+          python3 - <<'PY'
+          import onlinejudge_verify
+          import onlinejudge_verify.documentation.configure as configure
+
+          print("onlinejudge_verify:", onlinejudge_verify.__file__)
+          print("configure:", configure.__file__)
+          PY
+
+            
       - name: Debug environment
         run: |
           pwd
